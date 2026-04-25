@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naomi Con — Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Albert+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #ede8df;
+    --cream-mid: #e4ddd2;
+    --ink: #1a1814;
+    --ink-mid: #3d3a33;
+    --ink-light: #5a5649;
+    --ink-muted: #8a7e6a;
+    --terracotta: #C4603A;
+    --terracotta-light: #f0d5c8;
+    --sage: #4a6741;
+    --sage-light: #d4e4d0;
+    --dusty-blue: #4a607a;
+    --dusty-blue-light: #cdd9e8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Albert Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px;
+    height: 10px;
+    background: var(--terracotta);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  }
+  .cursor.hovering {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1.5px solid var(--terracotta);
+  }
+
+  /* Pages */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: var(--cream);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(26,24,20,0.08);
+  }
+  .nav-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: none;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--ink-light);
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    transition: color 0.2s;
+    cursor: none;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: 5.5rem 3rem 5rem; max-width: 860px; }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--terracotta-light);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-pill-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--terracotta);
+  }
+  .hero-pill span {
+    font-size: 11px;
+    color: #7a3520;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .hero h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 4.5vw, 46px);
+    line-height: 1.18;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    font-weight: 700;
+    margin-bottom: 1.75rem;
+  }
+  .hero h1 em { color: var(--terracotta); font-style: normal; }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--ink-light);
+    max-width: 500px;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+  .cta-row { display: flex; gap: 1rem; align-items: center; }
+  .scroll-hint {
+    margin-top: 4rem;
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 12px 24px;
+    font-family: 'Albert Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.2px;
+  }
+  .btn-primary:hover { background: #2d2820; transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid rgba(26,24,20,0.3);
+    padding: 12px 24px;
+    font-family: 'Albert Sans', sans-serif;
+    font-size: 13px;
+    cursor: none;
+    border-radius: 2px;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid rgba(26,24,20,0.1); margin: 0 3rem; }
+
+  /* Section label */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 500;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Work section */
+  .work-section { padding: 4rem 3rem; }
+  .work-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: rgba(26,24,20,0.1); }
+  .case-card {
+    background: var(--cream);
+    padding: 2.5rem 0;
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    cursor: none;
+    transition: background 0.2s, padding-left 0.2s;
+  }
+  .case-card:hover { background: var(--cream-dark); padding-left: 0.5rem; }
+  .case-number {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    color: var(--ink-muted);
+    padding-top: 5px;
+    font-weight: 600;
+  }
+  .case-tag {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+  .case-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+  }
+  .case-desc {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.7;
+    max-width: 460px;
+    font-weight: 300;
+  }
+  .case-pill {
+    display: inline-block;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    margin-top: 0.75rem;
+    letter-spacing: 0.3px;
+  }
+  .pill-terracotta { background: var(--terracotta-light); color: #7a3520; }
+  .pill-sage { background: var(--sage-light); color: #2d4a28; }
+  .pill-blue { background: var(--dusty-blue-light); color: #2d3d52; }
+  .case-arrow {
+    font-size: 18px;
+    color: var(--ink-muted);
+    padding-top: 5px;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .case-card:hover .case-arrow { transform: translate(3px, -3px); color: var(--ink); }
+
+  /* Color band */
+  .color-band { background: var(--terracotta); padding: 4rem 3rem; }
+  .color-band-text {
+    font-family: 'Albert Sans', sans-serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    color: #fff;
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 640px;
+    margin-bottom: 1rem;
+  }
+  .color-band-text strong { font-weight: 500; }
+  .color-band-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+  }
+
+  /* About */
+  .about-section { padding: 5rem 3rem; }
+  .about-grid { display: grid; grid-template-columns: 180px 1fr; gap: 5rem; align-items: start; }
+  .about-accent { width: 28px; height: 3px; background: var(--terracotta); border-radius: 2px; margin-bottom: 1.5rem; }
+  .about-body p { font-size: 16px; color: var(--ink-mid); line-height: 1.9; margin-bottom: 1.25rem; font-weight: 300; }
+
+  /* How I work */
+  .how-i-work { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(26,24,20,0.1); }
+  .how-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1.25rem; }
+  .how-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .how-list li { font-size: 15px; color: var(--ink-mid); line-height: 1.7; padding-left: 1.25rem; position: relative; font-weight: 300; }
+  .how-list li::before { content: '—'; position: absolute; left: 0; color: var(--terracotta); }
+
+  /* Personal */
+  .personal-section { padding: 5rem 3rem; background: var(--cream-dark); }
+  .personal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2.5rem; }
+  .personal-card {
+    background: var(--cream);
+    border-radius: 4px;
+    padding: 1.75rem;
+    border: 1px solid rgba(26,24,20,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .personal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,24,20,0.06); }
+  .personal-card-icon { font-size: 20px; margin-bottom: 1rem; }
+  .personal-card h3 { font-family: 'Unbounded', sans-serif; font-size: 13px; color: var(--ink); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.3; }
+  .personal-card p { font-size: 14px; color: var(--ink-light); line-height: 1.75; font-weight: 300; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.75rem; }
+  .personal-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--cream-mid); color: var(--ink-mid); }
+
+  /* Contact */
+  .contact-section { background: var(--ink); padding: 5rem 3rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+  .contact-left h2 { font-family: 'Unbounded', sans-serif; font-size: clamp(24px, 3.5vw, 38px); color: var(--cream); letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 0.75rem; font-weight: 700; }
+  .contact-left h2 em { font-style: normal; color: #b8a98a; }
+  .contact-left p { font-size: 14px; color: var(--ink-muted); font-weight: 300; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end; }
+  .contact-link { font-size: 14px; color: #b8a98a; text-decoration: none; transition: color 0.2s; cursor: none; font-weight: 300; }
+  .contact-link:hover { color: var(--cream); }
+
+  /* Footer */
+  .footer-bar { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); padding: 1.25rem 3rem; display: flex; justify-content: space-between; }
+  .footer-bar p { font-size: 11px; color: #5a5649; }
+
+  /* Case study */
+  .case-study-header { padding: 4rem 3rem 3rem; border-bottom: 1px solid rgba(26,24,20,0.1); }
+  .case-study-header h1 { font-family: 'Unbounded', sans-serif; font-size: clamp(26px, 4vw, 42px); letter-spacing: -1px; line-height: 1.18; color: var(--ink); margin-bottom: 1rem; font-weight: 700; }
+  .case-study-header .lead { font-size: 16px; color: var(--ink-light); max-width: 540px; line-height: 1.8; font-weight: 300; }
+  .case-study-body { padding: 4rem 3rem; max-width: 760px; }
+  .cs-section { margin-bottom: 3.5rem; }
+  .cs-section-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1rem; }
+  .cs-section p { font-size: 16px; color: var(--ink-mid); line-height: 1.9; margin-bottom: 1rem; font-weight: 300; }
+  .placeholder-img {
+    width: 100%; height: 300px;
+    background: var(--cream-dark);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 2rem 0;
+    border: 1px dashed rgba(26,24,20,0.15);
+    transition: background 0.2s;
+  }
+  .placeholder-img:hover { background: var(--cream-mid); }
+  .placeholder-img.tall { height: 400px; }
+  .placeholder-img span { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.5px; }
+  .placeholder-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .placeholder-sm { height: 200px; background: var(--cream-dark); border-radius: 4px; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(26,24,20,0.15); }
+  .placeholder-sm span { font-size: 11px; color: var(--ink-muted); }
+  .outcome-card { background: var(--terracotta-light); border-radius: 4px; padding: 1.75rem 2rem; margin-top: 1rem; border-left: 3px solid var(--terracotta); }
+  .outcome-card p { font-size: 15px; color: #5a2e1a; line-height: 1.8; margin: 0; font-weight: 300; }
+  .cs-accent-band { background: var(--sage-light); border-radius: 4px; padding: 1.5rem 2rem; margin: 2rem 0; border-left: 3px solid var(--sage); }
+  .cs-accent-band p { font-size: 15px; color: #2d4a28; line-height: 1.8; margin: 0; font-style: italic; font-weight: 300; }
+  .nav-case { display: flex; gap: 1rem; padding: 2rem 3rem; border-top: 1px solid rgba(26,24,20,0.1); }
+  .nav-case-btn { font-size: 12px; color: var(--ink-light); background: none; border: 1px solid rgba(26,24,20,0.15); padding: 10px 18px; cursor: none; font-family: 'Albert Sans', sans-serif; border-radius: 2px; transition: all 0.15s; }
+  .nav-case-btn:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-1px); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 3rem 1.5rem; }
+    section, .work-section, .about-section, .personal-section { padding: 3rem 1.5rem; }
+    .divider { margin: 0 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .personal-grid { grid-template-columns: 1fr; }
+    .contact-section { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
+    .contact-links { align-items: flex-start; }
+    .color-band { padding: 3rem 1.5rem; }
+    .case-study-header, .case-study-body { padding: 2rem 1.5rem; }
+    .nav-case { padding: 1.5rem; flex-wrap: wrap; }
+    .footer-bar { padding: 1.25rem 1.5rem; }
+    body { cursor: auto; }
+    .cursor { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a class="nav-name" onclick="goTo('main')" href="#">Naomi Con</a>
+  <ul class="nav-links">
+    <li><a onclick="goTo('main')" href="#">Work</a></li>
+    <li><a onclick="goToSection('main','about-anchor')" href="#">About</a></li>
+    <li><a onclick="goToSection('main','contact-anchor')" href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============ MAIN PAGE ============ -->
+<div id="page-main" class="page active">
+
+  <section class="hero">
+    <div class="hero-pill">
+      <div class="hero-pill-dot"></div>
+      <span>Lead Product Designer · Tone · Los Angeles</span>
+    </div>
+    <h1>Deep in the craft.<br><em>Venturing into code.</em><br>Driven to ship.</h1>
+    <p class="hero-sub">I'm a product designer who loves the full arc — learning a problem deeply, iterating until something clicks, and seeing it through to shipping.</p>
+    <div class="cta-row">
+      <button class="btn-primary" onclick="document.getElementById('work-anchor').scrollIntoView({behavior:'smooth'})">See my work</button>
+      <button class="btn-secondary" onclick="alert('Résumé coming soon!')">Download résumé</button>
+    </div>
+    <p class="scroll-hint">↓ Selected work</p>
+  </section>
+
+  <hr class="divider">
+
+  <section class="work-section" id="work-anchor">
+    <p class="section-label">Selected work</p>
+    <div class="work-grid">
+
+      <div class="case-card" onclick="goTo('contracts')">
+        <div class="case-number">01</div>
+        <div>
+          <p class="case-tag">AI · Product Design · Strategy</p>
+          <h2 class="case-title">Contracts AI</h2>
+          <p class="case-desc">Helping labels and business managers understand, verify, and trust their contracts — without a law degree.</p>
+          <span class="case-pill pill-terracotta">First-to-market AI feature</span>
+        </div>
+        <div class="case-arrow">↗</div>
+      </div>
+
+      <div class="case-card" onclick="goTo('homepage')">
+        <div class="case-number">02</div>
+        <div>
+          <p class="case-tag">Product Design · Full-stack · UX</p>
+          <h2 class="case-title">Homepage Redesign</h2>
+          <p class="case-desc">Turning a page everyone skipped in demos into a personalized launchpad that adapts to where you are in your journey.</p>
+          <span class="case-pill pill-sage">Designed & built in Claude Code</span>
+        </div>
+        <div class="case-arrow">↗</div>
+      </div>
+
+      <div class="case-card" onclick="goTo('unmapped')">
+        <div class="case-number">03</div>
+        <div>
+          <p class="case-tag">Product Design · Information Architecture</p>
+          <h2 class="case-title">Unmapped Sales</h2>
+          <p class="case-desc">Turning a growing pile of unresolved royalties into an actionable, in-app workflow — so artists actually get paid.</p>
+          <span class="case-pill pill-blue">No other platform has this</span>
+        </div>
+        <div class="case-arrow">↗</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="color-band">
+    <p class="color-band-text">Design satisfies my creativity and my systems thinking at once. But my favorite thing about it is simpler: <strong>when it's working, it can quietly level a playing field — giving someone access to something that used to be out of reach.</strong></p>
+    <p class="color-band-sub">Currently: Lead Product Designer at Tone, Los Angeles</p>
+  </div>
+
+  <section class="about-section" id="about-anchor">
+    <div class="about-grid">
+      <div>
+        <p class="section-label">A little about me</p>
+        <div class="about-accent"></div>
+      </div>
+      <div>
+        <div class="about-body">
+          <p>I'm naturally curious — always following threads, always wondering what else is possible. I do my best work when that's encouraged. That's how I've ended up spanning strategy, research, systems thinking, and increasingly, the codebase itself — contributing code, learning how our frontend libraries work, and thinking about the sequence of what needs to be built when I'm designing something new.</p>
+          <p>What that's given me practically: I now catch things I used to miss. When should a page auto-refresh? When does an error message show? When does a user need to hit save, and when should it just happen? These patterns are hard to specify in Figma and easy to get wrong. Being closer to the code means I think about them earlier, and more consistently across the product.</p>
+          <p>I'm also just genuinely interested in the people I work with. I'll notice a new haircut on a video call, ask to see your cat if it wanders into the background, and always want to hear about your weekend. Even on remote teams, that kind of easy back-and-forth doesn't have to feel forced — it just takes someone who actually cares. I do.</p>
+        </div>
+        <div class="how-i-work">
+          <p class="how-label">How I work</p>
+          <ul class="how-list">
+            <li>I'm most energized by the full creative arc — from understanding the problem to shipping the solution</li>
+            <li>I own problems end-to-end, from ambiguous brief to shipped product</li>
+            <li>I stay 1–2 steps ahead and keep stakeholders informed without being asked</li>
+            <li>I push back when something doesn't serve a real user need — and I explain why</li>
+            <li>I collaborate directly with engineering, including contributing code</li>
+            <li>I design with implementation in mind — thinking about sequence, constraints, and what's actually buildable</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="personal-section">
+    <p class="section-label">Outside the work</p>
+    <div class="personal-grid">
+      <div class="personal-card">
+        <div class="personal-card-icon">🏺</div>
+        <h3>Maker at heart</h3>
+        <p>Originally from Vancouver, BC — grew up in Bellevue, WA — now happily living in sunny Los Angeles.</p>
+        <div class="tag-row">
+          <span class="personal-tag">Ceramics</span>
+          <span class="personal-tag">Sewing</span>
+          <span class="personal-tag">Arts & crafts</span>
+          <span class="personal-tag">Concerts</span>
+          <span class="personal-tag">Comedy shows</span>
+        </div>
+      </div>
+      <div class="personal-card">
+        <div class="personal-card-icon">🏃</div>
+        <h3>Always moving</h3>
+        <p>Social running, working out, and finding excuses to be outside in the LA sun. Movement keeps me creative.</p>
+        <div class="tag-row">
+          <span class="personal-tag">Social running</span>
+          <span class="personal-tag">Fitness</span>
+          <span class="personal-tag">Outdoors</span>
+        </div>
+      </div>
+      <div class="personal-card">
+        <div class="personal-card-icon">📈</div>
+        <h3>Currently into</h3>
+        <p>Learning the ins and outs of personal finance and investing. Turns out understanding systems at work translates pretty well to money.</p>
+        <div class="tag-row">
+          <span class="personal-tag">Personal finance</span>
+          <span class="personal-tag">Investing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-section" id="contact-anchor">
+    <div class="contact-left">
+      <h2>Let's work<br><em>together.</em></h2>
+      <p>Open to new opportunities.</p>
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:naomi.con@gmail.com">naomi.con@gmail.com</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/naomicon" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <p>© 2026 Naomi Con</p>
+    <p>Designed & built by Naomi Con</p>
+  </div>
+
+</div>
+
+<!-- ============ CONTRACTS AI ============ -->
+<div id="page-contracts" class="page">
+  <div class="case-study-header">
+    <p class="case-tag" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);font-weight:500;margin-bottom:1rem;">AI · Product Design · Strategy</p>
+    <h1>Contracts AI</h1>
+    <p class="lead">Helping labels and business managers understand, verify, and trust their contracts — without a law degree.</p>
+  </div>
+  <div class="case-study-body">
+    <div class="cs-section">
+      <p class="cs-section-label">Context</p>
+      <p>Tone is a royalty management platform for independent music labels and distributors. At the heart of what Tone does is contracts — the agreements that determine how every dollar of revenue gets split between a label and its artists. Before a label can process a single royalty period, every contract has to be entered into the system accurately. That's a harder job than it sounds.</p>
+      <p>The people responsible for this aren't lawyers. They're label managers, business managers, and operations teams who are handed dense legal documents and expected to interpret them correctly — with real financial consequences if they get it wrong.</p>
+    </div>
+    <div class="placeholder-img tall"><span>Contract UI overview — before state</span></div>
+    <div class="cs-section">
+      <p class="cs-section-label">The problem</p>
+      <p>Contract setup is the biggest blocker in the royalty processing workflow. Users had to read and interpret every contract themselves, translate legal language into system configuration, and hope they got it right. There was no way to verify their work short of running a full royalty calculation and seeing what came out. For new customers especially, this was overwhelming — and a poor early experience meant we risked losing them before they ever saw the value of the platform.</p>
+    </div>
+    <div class="placeholder-row">
+      <div class="placeholder-sm"><span>PDF reader feature</span></div>
+      <div class="placeholder-sm"><span>Contract analyzer</span></div>
+    </div>
+    <div class="cs-section">
+      <p class="cs-section-label">My contribution</p>
+      <p>There was no brief for this project. Tone had a company goal to incorporate AI as a competitive advantage, with real pressure to be first-to-market. I collaborated with engineering leads to identify where to start — they scoped what was technically feasible, and I advocated for the workflows where users felt the most pain.</p>
+      <p>Contracts rose to the top because it's a pain point for every single customer, and it hits hardest during onboarding — the moment when a new customer is deciding whether Tone was the right choice. A win here wasn't just a feature, it was a retention play.</p>
+      <p>I designed three interconnected features: a PDF reader that extracts and surfaces key contract terms; a contract analyzer that compares a user's configuration against their uploaded PDF to catch setup errors; and a chat interface that lets users ask questions and simulate royalty calculations before committing to a real period.</p>
+    </div>
+    <div class="placeholder-img"><span>AI chat interface</span></div>
+    <div class="cs-section">
+      <p class="cs-section-label">The key decision</p>
+      <p>When the MVP was ready, there was pressure from leadership to ship. I pushed back. Our testing had shown that the AI responses were too long, inconsistent, and not quite useful enough. Shipping something that didn't actually help users — especially at the moment they needed confidence most — felt like it would do more damage than waiting. I advocated for refining our prompts before launch, and we did.</p>
+      <div class="cs-accent-band"><p>When we did ship, we kept it quiet — beta badges, organic discovery, no announcement. That gave us time to iterate with real feedback before a wider release coordinated with product marketing.</p></div>
+    </div>
+    <div class="placeholder-row">
+      <div class="placeholder-sm"><span>Beta badge treatment</span></div>
+      <div class="placeholder-sm"><span>Product marketing landing</span></div>
+    </div>
+    <div class="cs-section">
+      <p class="cs-section-label">Outcome</p>
+      <div class="outcome-card"><p>Contracts AI has become a selling point in product demos and a recurring highlight in onboarding training calls. Prospects ask about it. New customers respond to it. It's one of the clearest signals that Tone is investing in making a genuinely hard job easier — not just for power users, but for anyone who's ever been handed a contract and told to figure it out.</p></div>
+    </div>
+  </div>
+  <div class="nav-case">
+    <button class="nav-case-btn" onclick="goTo('main')">← All work</button>
+    <button class="nav-case-btn" onclick="goTo('homepage')">Next: Homepage Redesign →</button>
+  </div>
+</div>
+
+<!-- ============ HOMEPAGE REDESIGN ============ -->
+<div id="page-homepage" class="page">
+  <div class="case-study-header">
+    <p class="case-tag" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);font-weight:500;margin-bottom:1rem;">Product Design · Full-stack · UX</p>
+    <h1>Homepage Redesign</h1>
+    <p class="lead">Turning a page everyone skipped in demos into a personalized launchpad that adapts to where you are in your journey.</p>
+  </div>
+  <div class="case-study-body">
+    <div class="cs-section">
+      <p class="cs-section-label">Context</p>
+      <p>Royalty processing is a multi-step, high-stakes workflow. There's a lot to manage — sales data, costs, tracks, releases, contracts, payments, and payees — and knowing what to do at any given moment, especially when you're new, can be genuinely overwhelming. The homepage should be the place that orients you. For about a year and a half, ours wasn't doing that job.</p>
+    </div>
+    <div class="placeholder-img"><span>Original homepage — before state</span></div>
+    <div class="cs-section">
+      <p class="cs-section-label">The problem</p>
+      <p>The original homepage was a holdover from the first version of the app — a duplicate of the main navigation that added no new information and reflected none of the workflows we had built since launch. In demos, we skipped it. Users learned to ignore it. I took it upon myself to fix it.</p>
+    </div>
+    <div class="cs-section">
+      <p class="cs-section-label">My contribution</p>
+      <p>The core challenge: the same page needed to serve two meaningfully different users — not different people, but the same person at different points in their journey. A new customer needs orientation. An existing customer needs a status check.</p>
+      <p>I tackled this in three phases. First, a dedicated onboarding checklist that graduated users to a full homepage. Then a stopgap letting onboarding users skip ahead after hearing they wanted the full view earlier. Finally, a unified adaptive experience — onboarding tasks became default to-do items, and completing them unlocked progressive ones.</p>
+    </div>
+    <div class="placeholder-row">
+      <div class="placeholder-sm"><span>Phase 1 — onboarding checklist</span></div>
+      <div class="placeholder-sm"><span>Phase 3 — unified to-do</span></div>
+    </div>
+    <div class="placeholder-img"><span>Full homepage — final state</span></div>
+    <div class="cs-section">
+      <p class="cs-section-label">Built with Claude Code</p>
+      <div class="cs-accent-band"><p>This was the first project where I used Claude Code to implement my own designs end-to-end — one backend PR for a new API, mini app, and database migration; one frontend PR for all UI changes. Worked in parallel on a merged branch, tested locally, pushed to staging.</p></div>
+    </div>
+    <div class="cs-section">
+      <p class="cs-section-label">The key decision</p>
+      <p>The pivot to a single unified experience wasn't in the original plan — it came from listening. A customer's reaction during an onboarding call made it clear the checklist and the to-do list were solving the same underlying need. Merging them was the more honest reflection of how users actually think about their work.</p>
+    </div>
+    <div class="cs-section">
+      <p class="cs-section-label">Outcome</p>
+      <div class="outcome-card"><p>The homepage went from a page everyone skipped in demos to one that customers respond to immediately. Our head of customer support saw it happen in real time — a new customer lit up when they saw the to-do list. That reaction directly shaped what the feature became.</p></div>
+    </div>
+  </div>
+  <div class="nav-case">
+    <button class="nav-case-btn" onclick="goTo('contracts')">← Contracts AI</button>
+    <button class="nav-case-btn" onclick="goTo('unmapped')">Next: Unmapped Sales →</button>
+  </div>
+</div>
+
+<!-- ============ UNMAPPED SALES ============ -->
+<div id="page-unmapped" class="page">
+  <div class="case-study-header">
+    <p class="case-tag" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);font-weight:500;margin-bottom:1rem;">Product Design · Information Architecture</p>
+    <h1>Unmapped Sales</h1>
+    <p class="lead">Turning a growing pile of unresolved royalties into an actionable, in-app workflow — so artists actually get paid.</p>
+  </div>
+  <div class="case-study-body">
+    <div class="cs-section">
+      <p class="cs-section-label">Context</p>
+      <p>When a label uploads a sales file into Tone, each row represents a single sale — and there can be hundreds of thousands of them. Every row needs to connect to a track or release, which then connects to a contract, so Tone knows how to calculate and pay out royalties. When a row can't be matched, it becomes an unmapped sale.</p>
+      <p>Unmapped sales are money in limbo. For artists, it's royalties they're owed but haven't received. For labels, it's a financial liability they have to track and account for over time. And it's a problem that exists at every music company.</p>
+    </div>
+    <div class="placeholder-img"><span>Unmapped sales overview — before state</span></div>
+    <div class="cs-section">
+      <p class="cs-section-label">The problem</p>
+      <p>Before this tool existed, resolving unmapped sales was a manual, offline process. Download a report, parse the data yourself, manually create tracks and releases, re-upload, re-run. Tedious, easy to deprioritize, and the pile just kept growing — period after period.</p>
+    </div>
+    <div class="cs-section">
+      <p class="cs-section-label">My contribution</p>
+      <p>I designed an in-app tool that replaced the entire offline workflow. Users can now view, sort, and filter unmapped sales directly in Tone. When a row includes a product identifier like an ISRC or UPC, users can search Spotify for metadata and import it directly. When new products are saved, the sales file reprocesses automatically.</p>
+    </div>
+    <div class="placeholder-row">
+      <div class="placeholder-sm"><span>Table sorting — revenue view</span></div>
+      <div class="placeholder-sm"><span>Table sorting — artist view</span></div>
+    </div>
+    <div class="placeholder-img"><span>Spotify metadata import flow</span></div>
+    <div class="cs-section">
+      <p class="cs-section-label">The key decision</p>
+      <p>User research revealed two distinct mental models: a revenue POV and an artist POV. The solution was a flexible table with sorting and filtering — supported by collapsible rows to reveal individual sales without overwhelming the view.</p>
+      <div class="cs-accent-band"><p>The Spotify metadata integration turned a lookup-and-type workflow into an import — one decision that dramatically reduced the friction of resolving a row when you're staring down thousands of them.</p></div>
+    </div>
+    <div class="cs-section">
+      <p class="cs-section-label">Outcome</p>
+      <div class="outcome-card"><p>Internal users say this tool has completely changed their workflow. The process that used to get punted every period is now something people can actually make progress on. No other royalty platform has tools like this. For independent labels trying to make sure their artists get paid, that gap matters.</p></div>
+    </div>
+  </div>
+  <div class="nav-case">
+    <button class="nav-case-btn" onclick="goTo('homepage')">← Homepage Redesign</button>
+    <button class="nav-case-btn" onclick="goTo('main')">All work →</button>
+  </div>
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .case-card, .personal-card, .nav-case-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+  });
+
+  // Navigation
+  function goTo(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function goToSection(pageId, sectionId) {
+    goTo(pageId);
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  }
+
+  // Staggered entrance animation for case cards
+  function animateCards() {
+    const cards = document.querySelectorAll('.case-card');
+    cards.forEach((card, i) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(16px)';
+      card.style.transition = `opacity 0.4s ease ${i * 0.1}s, transform 0.4s ease ${i * 0.1}s`;
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100 + i * 100);
+    });
+  }
+
+  // Run on load
+  animateCards();
+</script>
+</body>
+</html>
