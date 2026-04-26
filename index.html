@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Naomi Con — Product Designer</title>
+<link rel="icon" type="image/png" href="nc_favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Albert+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
@@ -134,7 +135,7 @@
   .cta-row { display: flex; gap: 1rem; align-items: center; }
   .scroll-hint {
     margin-top: 4rem;
-    font-size: 10px;
+    font-size: 12px;
     color: var(--ink-muted);
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -173,7 +174,7 @@
 
   /* Section label */
   .section-label {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     color: var(--ink-muted);
@@ -203,7 +204,7 @@
     font-weight: 600;
   }
   .case-tag {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--ink-muted);
@@ -228,7 +229,7 @@
   }
   .case-pill {
     display: inline-block;
-    font-size: 10px;
+    font-size: 12px;
     padding: 4px 10px;
     border-radius: 20px;
     font-weight: 500;
@@ -259,7 +260,7 @@
   }
   .color-band-text strong { font-weight: 500; }
   .color-band-sub {
-    font-size: 11px;
+    font-size: 12px;
     color: rgba(255,255,255,0.5);
     letter-spacing: 0.5px;
   }
@@ -272,7 +273,7 @@
 
   /* How I work */
   .how-i-work { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(26,24,20,0.1); }
-  .how-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1.25rem; }
+  .how-label { font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1.25rem; }
   .how-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
   .how-list li { font-size: 15px; color: var(--ink-mid); line-height: 1.7; padding-left: 1.25rem; position: relative; font-weight: 300; }
   .how-list li::before { content: '—'; position: absolute; left: 0; color: var(--terracotta); }
@@ -288,7 +289,8 @@
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .personal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,24,20,0.06); }
-  .personal-card-icon { font-size: 20px; margin-bottom: 1rem; }
+  .personal-card-icon { margin-bottom: 1rem; }
+  .personal-card-icon img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: var(--cream-mid); display: block; }
   .personal-card h3 { font-family: 'Unbounded', sans-serif; font-size: 13px; color: var(--ink); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.3; }
   .personal-card p { font-size: 14px; color: var(--ink-light); line-height: 1.75; font-weight: 300; }
   .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.75rem; }
@@ -313,7 +315,7 @@
   .case-study-header .lead { font-size: 16px; color: var(--ink-light); max-width: 540px; line-height: 1.8; font-weight: 300; }
   .case-study-body { padding: 4rem 3rem; max-width: 760px; }
   .cs-section { margin-bottom: 3.5rem; }
-  .cs-section-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1rem; }
+  .cs-section-label { font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1rem; }
   .cs-section p { font-size: 16px; color: var(--ink-mid); line-height: 1.9; margin-bottom: 1rem; font-weight: 300; }
   .placeholder-img {
     width: 100%; height: 300px;
@@ -384,7 +386,6 @@
       <button class="btn-primary" onclick="document.getElementById('work-anchor').scrollIntoView({behavior:'smooth'})">See my work</button>
       <button class="btn-secondary" onclick="alert('Résumé coming soon!')">Download résumé</button>
     </div>
-    <p class="scroll-hint">↓ Selected work</p>
   </section>
 
   <hr class="divider">
@@ -431,7 +432,7 @@
 
   <div class="color-band">
     <p class="color-band-text">Design satisfies my creativity and my systems thinking at once. But my favorite thing about it is simpler: <strong>when it's working, it can quietly level a playing field — giving someone access to something that used to be out of reach.</strong></p>
-    <p class="color-band-sub">Currently: Lead Product Designer at Tone, Los Angeles</p>
+    <p class="color-band-sub">Currently: Founding Product Designer at Tone., Los Angeles</p>
   </div>
 
   <section class="about-section" id="about-anchor">
@@ -451,7 +452,6 @@
           <div class="about-body">
           <p>I'm most energized by the creative process in <strong>full</strong> — understanding the problem, iterating, prototyping, building, shipping. AI has meaningfully accelerated that loop for me: I can test ideas faster, get closer to real implementations, and spend more time on the decisions that actually matter.</p></div>
           <ul class="how-list">
-            <li>I'm most energized by the full creative arc, from understanding the problem to shipping the solution</li>
             <li>I own problems end-to-end, from ambiguous user feedback to shipped product</li>
             <li>I stay a few steps ahead and keep stakeholders informed without being asked</li>
             <li>I push back when something doesn't serve a real user need (and I explain why)</li>
@@ -469,19 +469,17 @@
     <p class="section-label">Outside the work</p>
     <div class="personal-grid">
       <div class="personal-card">
-        <div class="personal-card-icon">🏺</div>
+        <div class="personal-card-icon"><img src="" alt="Maker at heart"></div>
         <h3>Maker at heart</h3>
         <p>Originally from Vancouver, BC — grew up in Bellevue, WA — now happily living in sunny Los Angeles.</p>
         <div class="tag-row">
           <span class="personal-tag">Ceramics</span>
           <span class="personal-tag">Sewing</span>
           <span class="personal-tag">Arts & crafts</span>
-          <span class="personal-tag">Concerts</span>
-          <span class="personal-tag">Comedy shows</span>
         </div>
       </div>
       <div class="personal-card">
-        <div class="personal-card-icon">🏃</div>
+        <div class="personal-card-icon"><img src="" alt="Always moving"></div>
         <h3>Always moving</h3>
         <p>Social running, working out, and finding excuses to be outside in the LA sun. Movement keeps me creative.</p>
         <div class="tag-row">
@@ -491,7 +489,7 @@
         </div>
       </div>
       <div class="personal-card">
-        <div class="personal-card-icon">📈</div>
+        <div class="personal-card-icon"><img src="" alt="Currently into"></div>
         <h3>Currently into</h3>
         <p>Learning the ins and outs of personal finance and investing. Turns out understanding systems at work translates pretty well to money.</p>
         <div class="tag-row">
