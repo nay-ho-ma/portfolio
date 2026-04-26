@@ -42,7 +42,8 @@
   .cursor {
     width: 10px;
     height: 10px;
-    background: var(--terracotta);
+    background: #043740;
+    border: 2px solid #debd25;
     border-radius: 50%;
     position: fixed;
     top: 0; left: 0;
@@ -55,7 +56,7 @@
     width: 36px;
     height: 36px;
     background: transparent;
-    border: 1.5px solid var(--terracotta);
+    border: 1.5px solid #043740;
   }
 
   /* Pages */
@@ -286,9 +287,14 @@
     border-radius: 4px;
     padding: 1.75rem;
     border: 1px solid rgba(26,24,20,0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
-  .personal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,24,20,0.06); }
+  .personal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(26,24,20,0.09);
+    border-color: rgba(26,24,20,0.15);
+  }
   .personal-card-icon { margin-bottom: 1rem; }
   .personal-card-icon img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: var(--cream-mid); display: block; }
   .personal-card h3 { font-family: 'Unbounded', sans-serif; font-size: 13px; color: var(--ink); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.3; }
@@ -399,7 +405,7 @@
         <div>
           <p class="case-tag">AI · Product Design · Strategy</p>
           <h2 class="case-title">Contracts AI</h2>
-          <p class="case-desc">Helping labels and business managers understand, verify, and trust their contracts. No law degree required.</p>
+          <p class="case-desc">Empowering labels and business managers to understand, verify, and trust their contract set ups. No law degree required.</p>
           <span class="case-pill pill-terracotta">First-to-market AI feature</span>
         </div>
         <div class="case-arrow">↗</div>
@@ -663,7 +669,7 @@
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
   });
-  document.querySelectorAll('a, button, .case-card, .personal-card, .nav-case-btn').forEach(el => {
+  document.querySelectorAll('a, button, .case-card, .nav-case-btn').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
   });
