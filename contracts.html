@@ -40,8 +40,14 @@
     <p>Contract setup is the biggest blocker in the royalty processing workflow. Users had to read and interpret every contract themselves, translate legal language into system configuration, and hope they got it right. There was no way to verify their work short of running a full royalty calculation and seeing what came out. For new customers especially, this was overwhelming — and a poor early experience meant we risked losing them before they ever saw the value of the platform.</p>
   </div>
   <div class="placeholder-row">
-    <div class="placeholder-sm"><span>PDF reader feature</span></div>
-    <div class="placeholder-sm"><span>Contract analyzer</span></div>
+    <figure>
+      <video src="images/Contract-check.mp4" autoplay loop muted playsinline style="height:200px;width:100%;object-fit:cover;display:block;border-radius:4px;padding:0;border:none;"></video>
+      <figcaption class="cs-caption">PDF reader — AI-assisted contract term extraction</figcaption>
+    </figure>
+    <figure>
+      <img src="images/contract-analyzer.png" alt="Contract analyzer" style="width:100%;height:200px;object-fit:cover;object-position:top;display:block;border-radius:4px;">
+      <figcaption class="cs-caption">Contract analyzer — flagging setup errors against the uploaded PDF</figcaption>
+    </figure>
   </div>
   <div class="cs-section">
     <p class="cs-section-label">My contribution</p>
@@ -49,7 +55,10 @@
     <p>Contracts rose to the top because it's a pain point for every single customer, and it hits hardest during onboarding — the moment when a new customer is deciding whether Tone was the right choice. A win here wasn't just a feature, it was a retention play.</p>
     <p>I designed three interconnected features: a PDF reader that extracts and surfaces key contract terms; a contract analyzer that compares a user's configuration against their uploaded PDF to catch setup errors; and a chat interface that lets users ask questions and simulate royalty calculations before committing to a real period.</p>
   </div>
-  <div class="placeholder-img"><span>AI chat interface</span></div>
+  <figure class="cs-figure">
+    <img src="images/contract-chat.png" alt="AI chat interface" class="cs-img" style="margin:0;">
+    <figcaption class="cs-caption">Tone AI — ask questions and simulate royalty calculations in-context</figcaption>
+  </figure>
   <div class="cs-section">
     <p class="cs-section-label">The key decision</p>
     <p>When the MVP was ready, there was pressure from leadership to ship. I pushed back. Our testing had shown that the AI responses were too long, inconsistent, and not quite useful enough. Shipping something that didn't actually help users — especially at the moment they needed confidence most — felt like it would do more damage than waiting. I advocated for refining our prompts before launch, and we did.</p>

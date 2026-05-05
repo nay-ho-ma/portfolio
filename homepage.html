@@ -33,7 +33,10 @@
     <p class="cs-section-label">Context</p>
     <p>Royalty processing is a multi-step, high-stakes workflow. There's a lot to manage — sales data, costs, tracks, releases, contracts, payments, and payees — and knowing what to do at any given moment, especially when you're new, can be genuinely overwhelming. The homepage should be the place that orients you. For about a year and a half, ours wasn't doing that job.</p>
   </div>
-  <img src="images/homepage_before.png" alt="Original homepage — before state" class="cs-img">
+  <figure class="cs-figure">
+    <img src="images/homepage_before.png" alt="Original homepage — before state" class="cs-img" style="margin:0;">
+    <figcaption class="cs-caption">The original homepage — a duplicate of the nav that added no value</figcaption>
+  </figure>
   <div class="cs-section">
     <p class="cs-section-label">The problem</p>
     <p>The original homepage was a holdover from the first version of the app — a duplicate of the main navigation that added no new information and reflected none of the workflows we had built since launch. In demos, we skipped it. Users learned to ignore it. I took it upon myself to fix it.</p>
@@ -43,11 +46,16 @@
     <p>The core challenge: the same page needed to serve two meaningfully different users — not different people, but the same person at different points in their journey. A new customer needs orientation. An existing customer needs a status check.</p>
     <p>I tackled this in three phases. First, a dedicated onboarding checklist that graduated users to a full homepage. Then a stopgap letting onboarding users skip ahead after hearing they wanted the full view earlier. Finally, a unified adaptive experience — onboarding tasks became default to-do items, and completing them unlocked progressive ones.</p>
   </div>
-  <div class="placeholder-row">
-    <div class="placeholder-sm"><span>Phase 1 — onboarding checklist</span></div>
-    <div class="placeholder-sm"><span>Phase 3 — unified to-do</span></div>
+  <div class="cs-media-stack">
+    <figure>
+      <img src="images/Onboarding-checklist.png" alt="Phase 1 — onboarding checklist" style="width:100%;height:auto;display:block;border-radius:4px;">
+      <figcaption class="cs-caption">Phase 1 — dedicated onboarding checklist that graduated users to the full homepage</figcaption>
+    </figure>
+    <figure>
+      <video src="images/Tune-Up-Scan-Phase-2.mp4" autoplay loop muted playsinline style="width:100%;height:auto;display:block;border-radius:4px;"></video>
+      <figcaption class="cs-caption">Phase 3 — unified to-do list with adaptive Tune-Up scan</figcaption>
+    </figure>
   </div>
-  <img src="images/homepage_after.png" alt="Full homepage — final state" class="cs-img">
   <div class="cs-section">
     <p class="cs-section-label">Built with Claude Code</p>
     <div class="cs-accent-band"><p>This was the first project where I used Claude Code to implement my own designs end-to-end — one backend PR for a new API, mini app, and database migration; one frontend PR for all UI changes. Worked in parallel on a merged branch, tested locally, pushed to staging.</p></div>
