@@ -275,6 +275,37 @@ nav {
   opacity: 0.55;
 }
 
+/* Work-in-progress disclaimer */
+.wip-banner {
+  background: var(--dusty-blue-light);
+  border-left: 3px solid var(--dusty-blue);
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.wip-banner-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--dusty-blue);
+  flex-shrink: 0;
+}
+.wip-banner p {
+  font-size: 13px;
+  color: #2d3d52;
+  line-height: 1.6;
+  font-weight: 400;
+}
+.wip-banner a {
+  color: var(--dusty-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: none;
+}
+@media (max-width: 768px) {
+  .wip-banner { padding: 1rem 1.5rem; }
+}
+
 /* About */
 .about-section { padding: 5rem 3rem; }
 .about-grid { display: grid; grid-template-columns: 180px 1fr; gap: 5rem; align-items: start; }
@@ -378,3 +409,4 @@ figure { margin: 0; }
   body { cursor: auto; }
   .cursor { display: none; }
 }
+
